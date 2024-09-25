@@ -1,0 +1,98 @@
+/* General Styles */
+.frame-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 75vh;
+  background-color: #f9fafb; /* Slightly lighter background */
+}
+
+.container-login {
+  max-width: 50rem; 
+  width: 100%;
+  padding: 20px;
+}
+
+.wrapper {
+  background-color: #ffffff;
+  padding: 32px; /* Slightly reduced padding */
+  border-radius: 12px; /* Softer rounded corners */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1); /* Deeper shadow for better contrast */
+}
+
+/* Heading Styles */
+.heading {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.text-large {
+  font-size: 22px;
+  font-weight: 700; /* Bolder heading */
+  color: #2d3748; /* Darker text color */
+}
+
+.text-normal {
+  font-size: 13px;
+  color: #4a5568;
+}
+
+.text-links {
+  color: #2b6cb0;
+  text-decoration: none;
+  font-size: x-large;
+}
+
+.text-links:hover {
+  text-decoration: underline;
+}
+
+/* Input Styles */
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e2e8f0; /* Lighter border */
+  border-radius: 6px;
+  font-size: 15px;
+  color: #2d3748;
+  transition: border-color 0.3s ease;
+}
+
+.input-field:focus {
+  border-color: #3182ce;
+  outline: none;
+}
+
+/* Submit Button Styles */
+.input-submit {
+  width: 100%;
+  padding: 12px 0; /* Taller button for a better click area */
+  background-color: #2b6cb0;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-submit:hover {
+  background-color: #2c5282;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.input-submit:disabled {
+  background-color: #cbd5e0;
+  cursor: not-allowed;
+}
+
+/* Link Styles */
+a.text-links {
+  font-size: 14px;
+  color: #2b6cb0;
+}
+
+a.text-links:hover {
+  text-decoration: underline;
+}

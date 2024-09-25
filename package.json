@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "framer-motion": "^11.6.0",
+    "qrcode.react": "^4.0.1",
+    "react-circular-progressbar": "^2.1.0",
+    "react-responsive-carousel": "^3.2.23",
+    "react-to-print": "^2.15.1",
+    "styled-components": "^6.1.13"
+  }
+}
