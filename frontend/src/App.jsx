@@ -24,6 +24,7 @@ import { useDispatch } from 'react-redux';
 import MentorReg from './pages/MentorReg/MentorReg';
 import Profile from './pages/Profile/Profile';
 import DAP from './pages/DAP/DAP'
+import InAppCoins from './pages/ASPIRE_Coins/InAppCoins'
 
 function App() {
   const dispatch = useDispatch();
@@ -50,6 +51,7 @@ function App() {
         <Route path = "/chat" element = {<Chat />} />
         <Route path = "/mentor" element = {<Mentor />} />
         <Route path='/mentorReg' element={<MentorReg/>}/>
+        <Route path="/startup/inappcoins" element={<InAppCoins />} />
       </Route>
 
       {/* Public routes with Navbar and Footer */}

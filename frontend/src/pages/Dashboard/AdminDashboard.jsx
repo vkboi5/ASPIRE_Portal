@@ -1,45 +1,43 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { Bell, FileText, HelpCircle, Home, LogOut, Upload, User } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Separator } from "@/components/ui/separator"
-import { json, Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Bell, FileText, HelpCircle, Home, LogOut, Upload, User, Settings } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
+import { Link, useNavigate } from 'react-router-dom';
 
-export default function Dashboard() {
-  const [progress, setProgress] = useState(65)
+export default function AdminDashboard() {
+  const [progress, setProgress] = useState(65);
   const navigate = useNavigate();
-
   const [application, setApplication] = useState([]);
 
   useEffect(() => {
-    axios.post('http://localhost:3000/api/v1/get-application',{},{withCredentials: true})
-    .then((response) => {
-
-      setApplication(response.data)
-    })
-    .catch((error) => {
-      console.error(error)
-    })
-  }
-  ,[]);
+    axios.post('http://localhost:3000/api/v1/get-application', {}, { withCredentials: true })
+      .then((response) => {
+        setApplication(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
       <aside className="w-64 bg-white shadow-md">
-        <div className="p-4">
-          <h2 className="text-2xl font-bold text-primary">AYUSH Portal</h2>
+        <div className="p-4 bg-blue-800 text-white">
+          <h2 className="text-xl font-bold text-center">AYUSH ADMIN</h2>
+          <p className="text-sm text-center">Government of India</p>
         </div>
         <nav className="mt-6">
           {[
-            { icon: Home, label: 'Dashboard', to: "/dashboard" },
-            { icon: FileText, label: 'Applications', to: "/application-form" },
-            { icon: Upload, label: 'Documents', to: "/document-upload" },
+            { icon: Home, label: 'Dashboard', to: "/admin-dashboard" },
+            { icon: FileText, label: 'Applications', to: "/admin/applications" },
+            { icon: Upload, label: 'Documents', to: "/admin/document-upload" },
+            { icon: Settings, label: 'Settings', to: "/admin/settings" },
             { icon: Bell, label: 'Notifications', to: "#" },
-            { icon: HelpCircle, label: 'Help Center', to: "/help-center" },
-            { icon: HelpCircle, label: 'Chat', to: "/chat" },
+            { icon: HelpCircle, label: 'Help Center', to: "/admin/help-center" },
           ].map((item, index) => (
             <Link
               key={index}
@@ -56,8 +54,8 @@ export default function Dashboard() {
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
         {/* Header */}
-        <header className="bg-white shadow-sm">
-          <div className="flex items-center justify-between px-4 py-3">
+        <header className="bg-white shadow-sm p-4 border-b">
+          <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold">Admin Dashboard</h1>
             <div className="flex items-center">
               <Button variant="ghost" size="icon">
@@ -76,45 +74,43 @@ export default function Dashboard() {
         {/* Dashboard Content */}
         <div className="p-6 grid gap-6 md:grid-cols-2">
           {/* Application Status */}
-          <Card>
-            <CardHeader>
+          <Card className="border">
+            <CardHeader className="bg-gray-200 border-b">
               <CardTitle>Application Status</CardTitle>
-              <CardDescription>Track your registration progress</CardDescription>
+              <CardDescription>Monitor your registered applications</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className='max-h-full overflow-auto'>
-              {application.map((item, index) => {
-                return (
-                  <div key={index} className="flex items-center justify-between mt-4 w-full">
-                    <div className='w-full'>
-                      <p className="text-sm text-gray-600">{item.title}</p>
-                      <p className="font-semibold">{item.status}</p>
-                      <p className="text-sm text-gray-600">{item.founder}</p>
-                      {item.status === "Pending" ? (
-                        <Progress value={0} className="w-full mt-2" />
-                      ) : item.status === "Approved" ? (
-                        <Progress value={100} className="w-full mt-2" />
-                      ) : (
-                        <Progress value={50} className="w-full mt-2" />
-                      )}
+              <div className="max-h-full overflow-auto">
+                {application.map((item, index) => {
+                  return (
+                    <div key={index} className="flex items-center justify-between mt-4 w-full">
+                      <div className="w-full">
+                        <p className="text-sm text-gray-600">{item.title}</p>
+                        <p className="font-semibold">{item.status}</p>
+                        <p className="text-sm text-gray-600">{item.founder}</p>
+                        {item.status === "Pending" ? (
+                          <Progress value={0} className="w-full mt-2" />
+                        ) : item.status === "Approved" ? (
+                          <Progress value={100} className="w-full mt-2" />
+                        ) : (
+                          <Progress value={50} className="w-full mt-2" />
+                        )}
+                      </div>
                     </div>
-                  </div>
-                )
-              })}
+                  );
+                })}
               </div>
-              
-
             </CardContent>
           </Card>
 
           {/* Document Upload */}
-          <Card>
-            <CardHeader>
+          <Card className="border">
+            <CardHeader className="bg-gray-200 border-b">
               <CardTitle>Document Upload</CardTitle>
               <CardDescription>Submit required documents</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button onClick={() => navigate("/document-upload")} className="w-full">
+              <Button onClick={() => navigate("/admin/document-upload")} className="w-full">
                 <Upload className="w-4 h-4 mr-2" />
                 Upload Documents
               </Button>
@@ -122,8 +118,8 @@ export default function Dashboard() {
           </Card>
 
           {/* Notifications */}
-          <Card>
-            <CardHeader>
+          <Card className="border">
+            <CardHeader className="bg-gray-200 border-b">
               <CardTitle>Recent Notifications</CardTitle>
             </CardHeader>
             <CardContent>
@@ -143,10 +139,10 @@ export default function Dashboard() {
           </Card>
 
           {/* Help Center */}
-          <Card>
-            <CardHeader>
+          <Card className="border">
+            <CardHeader className="bg-gray-200 border-b">
               <CardTitle>Help Center</CardTitle>
-              <CardDescription>Get assistance and find answers</CardDescription>
+              <CardDescription>Assistance & Information</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <Button variant="outline" className="w-full justify-start">
@@ -165,5 +161,5 @@ export default function Dashboard() {
         </div>
       </main>
     </div>
-  )
+  );
 }

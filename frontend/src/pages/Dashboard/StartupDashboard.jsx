@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Bell, FileText, HelpCircle, Home, LogOut, Upload, User } from 'lucide-react';
+import { Bell, FileText, HelpCircle, Home, LogOut, Upload, User,ClipboardCheck } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import DAPPage from '../DAP/dap_page'; // Import the DAPPage component
 import StartupRegistration from '../ApplicationForm/ApplicationForm'
-
+import InAppCoins from '../ASPIRE_Coins/InAppCoins'
+import { useDisclosure, HStack, Text, Icon, Badge } from '@chakra-ui/react';
+import { FaCoins } from "react-icons/fa"; // Import coin icon
 
 export default function Dashboard() {
   const [progress, setProgress] = useState(65);
@@ -23,6 +25,8 @@ export default function Dashboard() {
   ]);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const unreadNotificationsCount = notifications.length; // Number of notifications (4)
+  const { isOpen, onOpen, onClose } = useDisclosure(); // Use Chakra UI's useDisclosure hook
+  const [coins, setCoins] = useState(100); // State to store user's coins (set initial coins to 100 for now)
 
   useEffect(() => {
     axios.post('http://localhost:3000/api/v1/get-application', {}, { withCredentials: true })
@@ -118,10 +122,30 @@ export default function Dashboard() {
                 <CardDescription>Email: {userInfo.email}</CardDescription>
                 <CardDescription>Mobile: {userInfo.mobile || "+91 9876543210"}</CardDescription>
                 <CardDescription>Location: {userInfo.location || "India"}</CardDescription>
-                <CardDescription>Your details</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700">This is the profile page where user information will be displayed.</p>
+
+                {/* Coin Information */}
+                <CardTitle className="mt-4">Coin Information</CardTitle>
+                <Button
+                  backgroundColor="yellow.200"
+                  variant="solid"
+                  onClick={onOpen}
+                  mb={4}
+                  width={"175px"} // Adjust width to fit content
+                  px={4} // Add padding for better spacing
+                >
+                  <HStack spacing={2} alignItems="center">
+                    <Icon as={FaCoins} color="yellow.500" boxSize={5} />
+                    <Text fontSize="lg" fontWeight="bold">My Coins:</Text>
+                    <Badge colorScheme="yellow" fontSize="lg">{coins}</Badge>
+                  </HStack>
+                </Button>
+
+                {/* InAppCoins modal component */}
+                <InAppCoins isOpen={isOpen} onClose={onClose} />
+
               </CardContent>
             </Card>
           </div>
@@ -195,8 +219,8 @@ export default function Dashboard() {
           </div>
         );
       case 'Complete Your Application':
-        return(
-          <StartupRegistration/>
+        return (
+          <StartupRegistration />
         );
       default:
         return <div>Select a section</div>;
@@ -204,66 +228,70 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md">
-        <div className="p-4">
-          <h2 className="text-2xl font-bold text-primary">AYUSH Portal</h2>
+      <div className="w-64 bg-gray-800 text-white p-4">
+        <div className="flex items-center mb-6">
+          <ClipboardCheck className="w-6 h-6 mr-2" />
+          <h1 className="text-2xl font-bold">Startup Dashboard</h1>
         </div>
-        <nav className="mt-6">
-          {[
-            { icon: Home, label: 'Dashboard', section: 'Dashboard' },
-            { icon: FileText, label: 'Application', section: 'Complete Your Application' },
-            { icon: Upload, label: 'Documents', section: 'Documents' },
-            { icon: User, label: 'Profile', section: 'Profile' },
-            { icon: Bell, label: 'Notifications', section: 'Notifications' },
-            { icon: HelpCircle, label: 'Help Center', section: 'Help Center' },
-            { icon: HelpCircle, label: 'Chat', section: 'Chat' },
-            { icon: FileText, label: 'Your DAP', section: 'Your DAP' }, // Add DAP to the sidebar
-          ].map((item, index) => (
-            <div
-              key={index}
-              onClick={() => setActiveSection(item.section)}
-              className={`flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer ${
-                activeSection === item.section ? "bg-gray-200 font-semibold" : ""
-              }`}
-            >
-              <item.icon className="w-5 h-5 mr-2 relative">
-                {/* Red circle with notification count */}
-                {item.section === 'Notifications' && unreadNotificationsCount > 0 && (
-                  <span className="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full px-1.5 py-0.5">
-                    {unreadNotificationsCount}
-                  </span>
-                )}
-              </item.icon>
-              {item.label}
-            </div>
-          ))}
-        </nav>
-      </aside>
+        <ul className="space-y-4">
+          <li
+            className={`cursor-pointer ${activeSection === 'Dashboard' ? 'text-yellow-400' : ''}`}
+            onClick={() => setActiveSection('Dashboard')}
+          >
+            <Home className="inline mr-2" /> Dashboard
+          </li>
+          <li
+            className={`cursor-pointer ${activeSection === 'Profile' ? 'text-yellow-400' : ''}`}
+            onClick={() => setActiveSection('Profile')}
+          >
+            <User className="inline mr-2" /> Profile
+          </li>
+          <li
+            className={`cursor-pointer ${activeSection === 'Your DAP' ? 'text-yellow-400' : ''}`}
+            onClick={() => setActiveSection('Your DAP')}
+          >
+            <FileText className="inline mr-2" /> Your DAP
+          </li>
+          <li
+            className={`cursor-pointer ${activeSection === 'Notifications' ? 'text-yellow-400' : ''}`}
+            onClick={() => setActiveSection('Notifications')}
+          >
+            <Bell className="inline mr-2" /> Notifications{' '}
+            <span className="bg-red-600 text-white text-xs rounded-full px-2 py-1">
+              {unreadNotificationsCount}
+            </span>
+          </li>
+          <li
+            className={`cursor-pointer ${activeSection === 'Documents' ? 'text-yellow-400' : ''}`}
+            onClick={() => setActiveSection('Documents')}
+          >
+            <Upload className="inline mr-2" /> Documents
+          </li>
+          <li
+            className={`cursor-pointer ${activeSection === 'Help Center' ? 'text-yellow-400' : ''}`}
+            onClick={() => setActiveSection('Help Center')}
+          >
+            <HelpCircle className="inline mr-2" /> Help Center
+          </li>
+          <li
+            className={`cursor-pointer ${activeSection === 'Chat' ? 'text-yellow-400' : ''}`}
+            onClick={() => setActiveSection('Chat')}
+          >
+            <HelpCircle className="inline mr-2" /> Saksham (Chatbot)
+          </li>
+          <li
+            className={`cursor-pointer ${activeSection === 'Complete Your Application' ? 'text-yellow-400' : ''}`}
+            onClick={() => setActiveSection('Complete Your Application')}
+          >
+            <LogOut className="inline mr-2" /> Complete Your Application
+          </li>
+        </ul>
+      </div>
 
-      {/* Main Content */}
-      <main className="flex-1 overflow-y-auto">
-        <header className="bg-white shadow-sm">
-          <div className="flex items-center justify-between px-4 py-3">
-            <h1 className="text-xl font-semibold">{activeSection}</h1>
-            <div className="flex items-center">
-              <Button variant="ghost" size="icon">
-                <Bell className="w-5 h-5" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <User className="w-5 h-5" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <LogOut className="w-5 h-5" />
-              </Button>
-            </div>
-          </div>
-        </header>
-
-        {/* Render Content Based on Active Section */}
-        {renderContent()}
-      </main>
+      {/* Main content */}
+      <div className="flex-1">{renderContent()}</div>
     </div>
   );
 }

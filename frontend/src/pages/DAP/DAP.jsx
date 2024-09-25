@@ -26,7 +26,7 @@ const DAP = forwardRef(({ data, ...rest }, ref) => {
     <Box marginTop="150px" p={8} bg="white" color="black" rounded="xl" boxShadow="lg" maxW="800px" mx="auto">
       <Flex justify="space-between" mb={4}>
         <Button
-          onClick={() => navigate('/startup/profile')}
+          onClick={() => navigate('/startup/dashboard')}
           bg="pink.300"
           color="white"
           _hover={{ bg: "pink.500" }}

@@ -24,7 +24,7 @@ const DAPPage = () => {
       <Flex height="100vh" alignItems="center" justifyContent="center">
         <Box textAlign="center">
           <p>No DAP data available. Please complete the application first.</p>
-          <Button onClick={() => navigate('/startup/startupregistration')} mt={4}>Go to Application</Button>
+          <Button onClick={() => navigate('/startup/dashboard')} mt={4}>Go to Application</Button>
         </Box>
       </Flex>
     );
