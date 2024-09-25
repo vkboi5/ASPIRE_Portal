@@ -7,8 +7,8 @@ import AdminDashboard from './pages/Dashboard/AdminDashboard';
 import ApplicationForm from './pages/ApplicationForm/ApplicationForm';
 import DocumentUpload from './pages/DocumentUpload/DocumentUpload';
 import Main from './pages/Main/Main';
-import LoginPage from './pages/Login/Login';
-import SignupPage from './pages/SignUp/SignUp';
+import Login from './pages/Login/Login';
+import Signup from './pages/SignUp/SignUp';
 import AboutPage from './pages/About/About';
 import FAQ from './pages/FAQ/FAQ';
 import Help from './pages/Help/Help';
@@ -60,8 +60,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/help-center" element={<Help />} />
         <Route path="/faq" element={<FAQ />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/otpverify" element={<OtpVerify />} />
 
         {/* Startup routes */}
