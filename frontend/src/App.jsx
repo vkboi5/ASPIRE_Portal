@@ -25,6 +25,8 @@ import MentorReg from './pages/MentorReg/MentorReg';
 import Profile from './pages/Profile/Profile';
 import DAP from './pages/DAP/DAP'
 import InAppCoins from './pages/ASPIRE_Coins/InAppCoins'
+import Resources from './pages/Resources/Resources.jsx';
+import Networks from './pages/Networks/Networks';
 
 function App() {
   const dispatch = useDispatch();
@@ -61,10 +63,13 @@ function App() {
         <Route path="/user" element={<Home />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/help-center" element={<Help />} />
+        <Route path="/resources" element={<Resources />} />
+        <Route path="/networks" element={<Networks />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/otpverify" element={<OtpVerify />} />
+
 
         {/* Startup routes */}
 
