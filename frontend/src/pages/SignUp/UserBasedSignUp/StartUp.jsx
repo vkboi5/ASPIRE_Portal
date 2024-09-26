@@ -378,7 +378,8 @@ const StartUp = () => {
 
       <Button
         colorScheme="blue"
-        width="100%"
+        width="200px"
+        marginBottom="20px"
         style={{ marginTop: 15 }}
         onClick={() => submitHandler()}
         isLoading={loading}

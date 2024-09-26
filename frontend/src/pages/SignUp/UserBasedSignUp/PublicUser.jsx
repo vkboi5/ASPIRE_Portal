@@ -298,10 +298,11 @@ const PublicUser = () => {
 
       <Button
         colorScheme="blue"
-        width="100%"
+        width="200px"
         style={{ marginTop: 15 }}
         onClick={() => submitHandler()}
         isLoading={loading}
+        marginBottom={4}
       >
         Sign Up
       </Button>
