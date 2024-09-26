@@ -9,7 +9,7 @@ const CTA = () => {
     <section className="py-12 bg-blue-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
-            <span className="block text-white-400">Consider Subscribing our newsletter today!</span>
+            <span className="block text-white-400">Get updates from the AYUSH Digital Library</span>
           </h2>
           <form className="mt-8 sm:flex" onSubmit={(e) => { e.preventDefault(); console.log('Form submitted with email:', email); }}>
             <Input
