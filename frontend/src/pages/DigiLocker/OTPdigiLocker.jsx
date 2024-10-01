@@ -45,7 +45,7 @@ function DigiLockerPin() {
           6 digit PIN provides extra security to your account with two-factor
           authentication. Don’t disclose your Security PIN to anyone.
         </p>
-        <p className="description">
+        <p className="description-otp">
             <b>Please enter your 6 digit PIN to sigin-in</b>
         </p>
 

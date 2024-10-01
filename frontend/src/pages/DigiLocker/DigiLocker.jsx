@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./DigiLocker.css";
 import digiImage from "../../assets/digilocker.png";
 import logo from "../../assets/logo2.png";
@@ -19,7 +19,7 @@ function DigiLockerConsent() {
   // For date management
   const currentDate = new Date();
   const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(currentDate.getMonth()); // 0 = January
+  const [selectedMonth, setSelectedMonth] = useState(currentDate.getMonth());
   const [selectedDay, setSelectedDay] = useState(currentDate.getDate());
 
   // Function to get number of days in a month
@@ -47,62 +47,62 @@ function DigiLockerConsent() {
   };
 
   return (
-    <div className="digilocker-container">
-      <div className="header">
-        <img className="digilogo" src={digiImage} alt="DigiLocker" />
-        <img className="securelogo" src={securelogo} alt="Secure Logo" />
-        <img className="logo" src={logo} alt="ASPIRE" />
+    <div className="digilocker-consent-container">
+      <div className="digilocker-consent-header">
+        <img className="digilocker-consent-logo" src={digiImage} alt="DigiLocker" />
+        <img className="digilocker-consent-secure-logo" src={securelogo} alt="Secure Logo" />
+        <img className="digilocker-consent-aspire-logo" src={logo} alt="ASPIRE" />
       </div>
 
-      <div className="content">
+      <div className="digilocker-consent-content">
         <h3>
           Please provide your consent to share the following with <b>Zerodha</b>:
         </h3>
 
         <form onSubmit={handleSubmit}>
-          <div className="documents-section">
-            <div className="select-all">
+          <div className="digilocker-consent-documents-section">
+            <div className="digilocker-consent-select-all">
               <input
                 type="checkbox"
                 checked={selectAllChecked}
                 onChange={handleSelectAll}
-                className="document-checkbox select-all-checkbox"
+                className="digilocker-consent-document-checkbox digilocker-consent-select-all-checkbox"
               />
-              <div className="flexSelectAll">
-                <label className="issued-docs">Issued Docs 2</label>
-                <label className="select-all-label">Select all</label>
+              <div className="digilocker-consent-flex-select-all">
+                <label className="digilocker-consent-issued-docs">Issued Docs 2</label>
+                <label className="digilocker-consent-select-all-label">Select all</label>
               </div>
             </div>
 
-            <div className="document-item">
+            <div className="digilocker-consent-document-item">
               <input
                 type="checkbox"
                 checked={aadhaarChecked}
                 onChange={() => setAadhaarChecked(!aadhaarChecked)}
-                className="document-checkbox"
+                className="digilocker-consent-document-checkbox"
               />
               <label>Aadhaar Card (XX6646)</label>
             </div>
 
-            <div className="document-item">
+            <div className="digilocker-consent-document-item">
               <input
                 type="checkbox"
                 checked={panChecked}
                 onChange={() => setPanChecked(!panChecked)}
-                className="document-checkbox"
+                className="digilocker-consent-document-checkbox"
               />
               <label>PAN Verification Record (XXA9660N)</label>
             </div>
           </div>
 
-          <div className="info-section">
+          <div className="digilocker-consent-info-section">
             <h4>Profile Information</h4>
             <p>Name, Date of Birth, Gender</p>
           </div>
 
-          <div className="validity-section">
+          <div className="digilocker-consent-validity-section">
             <h4>Consent validity date</h4>
-            <div className="date-picker">
+            <div className="digilocker-consent-date-picker">
               <label>Day:</label>
               <select
                 value={selectedDay}
@@ -141,22 +141,22 @@ function DigiLockerConsent() {
             </div>
           </div>
 
-          <div className="purpose-section">
+          <div className="digilocker-consent-purpose-section">
             <h4>Purpose</h4>
             <p>Know Your Customer</p>
           </div>
 
-          <p className="consent-note">
+          <p className="digilocker-consent-note">
             Consent validity is subject to applicable laws.
             <br />
             By clicking 'Allow', you are giving consent to share with <b>ASPIRE</b>.
           </p>
 
-          <div className="buttons-section">
-            <button type="button" className="deny-btn">
+          <div className="digilocker-consent-buttons-section">
+            <button type="button" className="digilocker-consent-deny-btn">
               Deny
             </button>
-            <button type="submit" className="allow-btn">
+            <button type="submit" className="digilocker-consent-allow-btn">
               Allow
             </button>
           </div>
