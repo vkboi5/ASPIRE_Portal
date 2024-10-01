@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import StartupDashboard from './pages/Dashboard/StartupDashboard';
@@ -27,6 +28,8 @@ import DAP from './pages/DAP/DAP'
 import InAppCoins from './pages/ASPIRE_Coins/InAppCoins'
 import Resources from './pages/Resources/Resources.jsx';
 import Networks from './pages/Networks/Networks';
+import DigiLocker from './pages/DigiLocker/DigiLocker';
+import DigiLockerPin from './pages/DigiLocker/OTPdigiLocker';
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +46,8 @@ function App() {
     <Routes>
       {/* Protected routes */}
       <Route element={<PublicLayout />}>
+        <Route path="/digilocker" element={<DigiLocker />} />
+        <Route path="/digilocker/pin" element={<DigiLockerPin />} />
         <Route path="/startup/dashboard" element={<StartupDashboard />} />
         <Route path="/otherusers/dashboard" element={<OtherUsersDashboard />} />
         <Route path="/investor/dashboard" element={<InvestorDashboard />} />
