@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef,useMemo } from 'react';
 import axios from 'axios';
-import pancard from '../../assets/pancard.png';
+import pancard from '../../assets/panCard.png';
 import adhaar from '../../assets/adhaar.png';
 
 import {
