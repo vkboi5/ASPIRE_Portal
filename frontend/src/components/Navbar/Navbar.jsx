@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, User } from 'lucide-react';
-import { useSelector } from 'react-redux';
-import Cookies from 'js-cookie';
+import { Menu, X, User, Settings, Bell, Edit, LogIn, LogOut } from 'lucide-react';
 import MinistryLogo from '../../assets/Ministry AYUSH Logo.png';
 import AspireLogo from '../../assets/logo2.png';
 import { FaUserCircle } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../../redux/authSlice';
 
 const navItems = [
   { name: 'Home', to: '/' },
@@ -21,27 +21,44 @@ const navItems = [
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [language, setLanguage] = useState('English'); // Default language
-  const location = useLocation();
-  const isAuthenticated = useSelector(state => state.auth.auth);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [language, setLanguage] = useState('English');
+  const isAuthenticated = useSelector(state => state.auth.auth);  // Fetch authentication state from Redux
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const dropdownRef = useRef(null);  // Create a ref for the dropdown
 
   const handleLogout = () => {
-    Cookies.remove('token');
-    navigate('/login');
+    dispatch(setUser(false));  // Set authentication to false on logout
+    localStorage.removeItem("userInfo");  // Clear user info from localStorage
+    navigate('/login');  // Redirect to login page after logout
   };
 
   const isActive = (to) => location.pathname === to;
 
   const toggleLanguage = () => {
-    setLanguage((prev) => (prev === 'English' ? 'Hindi' : 'English'));
+    setLanguage(prev => (prev === 'English' ? 'Hindi' : 'English'));
   };
+
+  // Close the dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
       {/* Language Toggle Section */}
       <div className="bg-black text-white py-2 text-start px-4">
-        Language : 
+        Language :
         <Button onClick={toggleLanguage} className="text-lg">
           {language}
         </Button>
@@ -71,46 +88,65 @@ export default function Navbar() {
             </div>
 
             {/* Centered navigation links */}
-            <div className="hidden md:flex md:items-center md:space-x-10 mx-auto">
-              {navItems.filter(item => !item.protected || isAuthenticated).map((item) =>
-                <Link
-                  key={item.name}
-                  to={item.to}
-                  className={`text-lg font-semibold ${  // Changed text-2xl to text-lg
-                    isActive(item.to)
-                      ? 'text-blue-600'
-                      : 'text-gray-700 hover:text-gray-900'
-                  }`}
-                >
+            <div className="hidden md:flex space-x-8">
+              {navItems.filter(item => !item.protected || isAuthenticated).map((item, index) => (
+                <Link key={index} to={item.to} className={`text-gray-800 hover:text-blue-500 ${isActive(item.to) ? 'font-bold' : ''}`}>
                   {item.name}
                 </Link>
-              )}
+              ))}
             </div>
 
             {/* Right-aligned user-related icons */}
-            <div className="hidden md:flex md:items-center space-x-6">
+            <div className="relative hidden md:flex md:items-center space-x-6">
               {isAuthenticated ? (
                 <>
                   <Button
                     onClick={handleLogout}
-                    className="bg-blue-600 text-white hover:bg-orange-700 transition px-6 py-2 text-lg" // Adjusted text size for the button
+                    className="bg-blue-600 text-white hover:bg-orange-700 transition px-6 py-2 text-lg"
                   >
                     Logout
                   </Button>
-                  <User className="text-gray-700 h-10 w-10" />
+
+                  {/* Profile Icon with Dropdown */}
+                  <div
+                    className="relative"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}  // Toggle dropdown on click
+                    ref={dropdownRef}  // Attach the ref to the dropdown container
+                  >
+                    <FaUserCircle className="user-icon h-12 w-12 text-gray-700 cursor-pointer" />
+                    {isDropdownOpen && (
+                      <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-50">
+                        <Link to="/profile" className="block px-4 py-2 text-blue-600 hover:bg-gray-100">
+                          <User className="inline mr-2" />
+                          View Profile
+                        </Link>
+                        <Link to="/edit-profile" className="block px-4 py-2 text-blue-600 hover:bg-gray-100">
+                          <Edit className="inline mr-2" />
+                          Edit Profile
+                        </Link>
+                        <Link to="/notifications" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                          <Bell className="inline mr-2" />
+                          Notifications
+                        </Link>
+                        <Link to="/settings" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                          <Settings className="inline mr-2" />
+                          Settings
+                        </Link>
+                        <Button onClick={handleLogout} className="block bg-white text-white px-4 py-2 text-red-600 hover:bg-gray-100 w-full text-left">
+                          <LogOut className="inline mr-2" />
+                          Logout
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 </>
               ) : (
                 <Button asChild>
-                  <Link to={'/login'} className='bg-blue-400 text-white hover:bg-blue-500 transition px-6 py-2 text-lg'>
+                  <Link to={'/login'} className="bg-blue-400 text-white hover:bg-blue-500 transition px-6 py-2 text-lg">
                     Login
                   </Link>
                 </Button>
               )}
-              <Link to={'/login'}>
-                <div className="pointer">
-                  <FaUserCircle className="user-icon h-12 w-12 text-gray-700" />
-                </div>
-              </Link>
             </div>
 
             {/* Mobile menu button */}
@@ -139,7 +175,7 @@ export default function Navbar() {
                 <Link
                   key={item.name}
                   to={item.to}
-                  className={`block rounded-md px-4 py-3 text-lg font-medium ${ // Adjusted text size for mobile menu
+                  className={`block rounded-md px-4 py-3 text-lg font-medium ${
                     isActive(item.to)
                       ? 'bg-orange-600 text-white'
                       : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'

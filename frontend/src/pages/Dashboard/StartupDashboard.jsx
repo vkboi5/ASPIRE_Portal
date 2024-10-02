@@ -98,14 +98,14 @@ export default function Dashboard() {
   const [dapData, setDapData] = useState(null);
 
   useEffect(() => {
-    axios
-      .post('http://localhost:3000/api/v1/get-application', {}, { withCredentials: true })
-      .then((response) => {
-        setApplication(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // axios
+    //   .post('http://localhost:3000/api/v1/get-application', {}, { withCredentials: true })
+    //   .then((response) => {
+    //     setApplication(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
 
     // Timezone-based greeting
     const hours = new Date().getHours();

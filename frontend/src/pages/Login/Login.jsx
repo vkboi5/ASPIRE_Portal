@@ -11,12 +11,14 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import "./LoginForm.css"; // Custom CSS with updated styles
-
+import { useDispatch } from "react-redux";
+import { setUser } from '../../redux/authSlice';
 const Login = () => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
+  const dispatch = useDispatch();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -96,6 +98,9 @@ const Login = () => {
         variant: "solid",
       });
 
+      dispatch(setUser(true));  // Set user as authenticated in Redux
+
+      // Navigate to the correct dashboard based on userType
       if (userInfo.userType === "startUp") {
         navigate("/startup/dashboard");
       } else if (userInfo.userType === "incubator") {
@@ -205,7 +210,7 @@ const Login = () => {
                   colorScheme="blue"
                   isLoading={loading}
                   onClick={otpHandler}
-                  className="input-submit"
+                  className="input-submit w-1/3 mt-4"
                 >
                   Verify OTP
                 </Button>
