@@ -180,7 +180,7 @@ const Login = () => {
                     colorScheme="blue"
                     isLoading={loading}
                     onClick={submitHandler}
-                    className="input-submit"
+                    className="input-submit w-1/3"
                   >
                     Sign In
                   </Button>

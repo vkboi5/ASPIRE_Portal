@@ -22,7 +22,7 @@ import signature from '../../assets/signature.png';
 const DAP = forwardRef((props, ref) => {
   const handlePrint = useReactToPrint({
     content: () => ref.current,
-    documentTitle: 'Digital Ayush Passport',
+    documentTitle: 'Digital AYUSH Passport',
     pageStyle: `
       @page {
         size: A4;
@@ -103,7 +103,7 @@ const DAP = forwardRef((props, ref) => {
               alt="Startup Logo"
               boxSize="120px"
             />
-            <Heading as="h1" size="lg" color="blue.500">Digital Ayush Passport</Heading>
+            <Heading as="h1" size="lg" color="blue.500">Digital AYUSH Passport</Heading>
             <Image
               borderRadius="full"
               boxSize="100px"

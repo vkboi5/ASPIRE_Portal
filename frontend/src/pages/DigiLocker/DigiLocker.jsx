@@ -3,11 +3,13 @@ import "./DigiLocker.css";
 import digiImage from "../../assets/digilocker.png";
 import logo from "../../assets/logo2.png";
 import securelogo from "../../assets/secureLogo.png";
+import { useNavigate } from "react-router-dom";
 
 function DigiLockerConsent() {
   const [aadhaarChecked, setAadhaarChecked] = useState(true);
   const [panChecked, setPanChecked] = useState(true);
   const [selectAllChecked, setSelectAllChecked] = useState(true);
+  const navigate = useNavigate();
 
   const handleSelectAll = () => {
     const newCheckedState = !selectAllChecked;
@@ -43,7 +45,8 @@ function DigiLockerConsent() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Consent Submitted!");
+    // Redirect to OTP page
+    navigate('/digilocker/pin');
   };
 
   return (

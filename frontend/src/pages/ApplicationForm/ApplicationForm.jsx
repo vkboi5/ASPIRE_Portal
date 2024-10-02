@@ -16,7 +16,7 @@ import {
   Badge,
   keyframes,
 } from "@chakra-ui/react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 // import theme from "../../theme/theme.jsx";
 import Category from './Category.jsx';
@@ -93,6 +93,7 @@ function StartupRegistration(props) {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [isRegistered, setIsRegistered] = useState(false);
+  const [documentsFetched, setDocumentsFetched] = useState(false);
   const [dapData, setDapData] = useState({
     profilePicture: 'https://via.placeholder.com/100',
     name: 'John Doe',
@@ -134,6 +135,14 @@ function StartupRegistration(props) {
     content: () => dapRef.current,
   });
 
+  useEffect(() => {
+    const userEmail = userInfo?.email || 'guest';
+    const fetched = localStorage.getItem(`documentsFetched_${userEmail}`);
+    if (fetched === 'true') {
+      setDocumentsFetched(true);
+    }
+  }, [userInfo]);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -143,6 +152,11 @@ function StartupRegistration(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!documentsFetched) {
+      alert("Please fetch your DigiLocker documents before proceeding.");
+      return;
+    }
 
     if (currentStep === 1) {
       setCurrentStep(2);
@@ -171,6 +185,9 @@ function StartupRegistration(props) {
         };
 
         localStorage.setItem('dapData', JSON.stringify(dapData)); // Store dapData with email
+
+        const userEmail = userInfo?.email || 'guest';
+        localStorage.removeItem(`documentsFetched_${userEmail}`);
 
         navigate("/startup/dap", { state: { dapData } });
       } catch (error) {
@@ -222,11 +239,20 @@ function StartupRegistration(props) {
                   </Flex>
                 )}
                 <Stack align={"center"}>
-                  <Heading fontSize={"4xl"}>Complete Your Application</Heading>
-                  <Text fontSize={"lg"} color={"gray.600"}>
-                    Follow the steps to complete your application ✌️
-                  </Text>
-                </Stack>
+            <Heading fontSize={"4xl"}>Complete Your Application</Heading>
+            <Text fontSize={"lg"} color={"gray.600"}>
+              Please fetch your DigiLocker Documents{" "}
+              {!documentsFetched ? (
+                <Button onClick={() => navigate('/digilocker')}>
+                  Fetch Docs
+                </Button>
+              ) : (
+                <Badge colorScheme="green" ml={2}>
+                  Documents Fetched Successfully!
+                </Badge>
+              )}
+            </Text>
+          </Stack>
                 <Box width="full">
                   <Stack direction="row" spacing={4} justify="center">
                     {["About Startup", "Category", "Your Interest"].map((step, index) => (
