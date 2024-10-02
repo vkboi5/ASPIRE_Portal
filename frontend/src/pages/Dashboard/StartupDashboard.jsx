@@ -4,7 +4,7 @@ import { useEffect, useState, useRef,useMemo } from 'react';
 import axios from 'axios';
 import pancard from '../../assets/panCard.png';
 import adhaar from '../../assets/adhaar.png';
-
+import { useDispatch } from 'react-redux';
 import {
   Bell,
   FileText,
@@ -31,6 +31,7 @@ import InAppCoins from '../ASPIRE_Coins/InAppCoins';
 import { useDisclosure, HStack, Text, Icon, Badge } from '@chakra-ui/react';
 import { FaCoins } from 'react-icons/fa'; // Import coin icon
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for React Router v6
+import { setUser } from '../../redux/authSlice';
 
 export default function Dashboard() {
   const [progress, setProgress] = useState(65);
@@ -46,6 +47,8 @@ export default function Dashboard() {
   const [currentPreviewDoc, setCurrentPreviewDoc] = useState(null);
   const [documentsFetched, setDocumentsFetched] = useState(false);
   const fileInputRef = useRef(null);
+  const dispatch = useDispatch();
+
   const [notifications] = useState([
     {
       message: 'Application submitted',
@@ -413,11 +416,9 @@ const handleFileChange = (event) => {
   };
 
   const handleLogout = () => {
-    // Clear user information from localStorage
-    localStorage.removeItem('userInfo');
-
-    // Redirect to the login page
-    navigate('/login'); // Update the path to your login page
+    dispatch(setUser(false));  // Set authentication to false on logout
+    localStorage.removeItem("userInfo");  // Clear user info from localStorage
+    navigate('/login');  // Redirect to login page after logout
   };
 
   useEffect(() => {
