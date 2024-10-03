@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import StartupDashboard from './pages/Dashboard/StartupDashboard';
 import OtherUsersDashboard from './pages/Dashboard/OtherUserDashboard';
-import InvestorDashboard from './pages/Dashboard/InvestorDashboard';
+import InvestorDashboard from './pages/Dashboard/InvestorDashboard/InvestorDashboard';
 import AdminDashboard from './pages/Dashboard/AdminDashboard';
 import ApplicationForm from './pages/ApplicationForm/ApplicationForm';
 import DocumentUpload from './pages/DocumentUpload/DocumentUpload';
@@ -30,7 +30,7 @@ import Resources from './pages/Resources/Resources.jsx';
 import Networks from './pages/Networks/Networks';
 import DigiLocker from './pages/DigiLocker/DigiLocker';
 import DigiLockerPin from './pages/DigiLocker/OTPdigiLocker';
-
+import VentureView from './pages/VentureView/VentureView';
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -59,6 +59,7 @@ function App() {
         <Route path = "/mentor" element = {<Mentor />} />
         <Route path='/mentorReg' element={<MentorReg/>}/>
         <Route path="/startup/inappcoins" element={<InAppCoins />} />
+        <Route path="/venture-view" element={<VentureView />} />
       </Route>
 
       {/* Public routes with Navbar and Footer */}
