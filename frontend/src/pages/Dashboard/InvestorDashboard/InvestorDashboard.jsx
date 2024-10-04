@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Bell, FileText, HelpCircle, Home, LogOut, Upload, User, ClipboardCheck, Search, Mail, Phone } from 'lucide-react';
+import { Bell, FileText, HelpCircle, Home, LogOut, Upload, User, ClipboardCheck, Search, Mail, Phone,Contact2} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import 'react-circular-progressbar/dist/styles.css';
 import { FaCoins } from "react-icons/fa";
@@ -651,9 +651,11 @@ export default function Dashboard() {
   return (
     <main className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md">
-        <div className="p-4">
-          <h2 className="text-2xl font-bold text-primary">Investor Dashboard</h2>
+      <aside className="w-64 bg-blue-400 shadow-md">
+        <div className="p-4 bg-blue-600">
+          <h2 className="text-2xl font-bold text-primary text-white"> 
+            Investor Dashboard
+            </h2>
         </div>
         <nav className="mt-6">
           <button
@@ -720,7 +722,10 @@ export default function Dashboard() {
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto p-6">
         <header className="flex items-center justify-between mb-4">
-          <h1 className="text-3xl font-bold">Investor Dashboard</h1>
+          <h1 className="text-3xl font-bold">
+            <Contact2 className='w-8 h-8'/>
+            Investor Dashboard
+          </h1>
           <div className="flex items-center space-x-4">
             <Button onClick={() => setActiveSection('notifications')} variant="ghost">
               <Bell className="w-5 h-5" />

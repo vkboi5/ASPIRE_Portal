@@ -108,11 +108,11 @@ const Login = () => {
       } else if (userInfo.userType === "govtAgency") {
         navigate("/admin/dashboard");
       } else if (userInfo.userType === "mentor") {
-        navigate("/yettobedone");
+        navigate("/otherusers/dashboard");
       } else if (userInfo.userType === "investor") {
         navigate("/investor/dashboard");
       } else {
-        navigate("/yetobedone");
+        navigate("/otherusers/dashboard");
       }
     } else {
       toast({
