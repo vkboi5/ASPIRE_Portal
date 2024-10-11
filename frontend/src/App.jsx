@@ -31,6 +31,7 @@ import Networks from './pages/Networks/Networks';
 import DigiLocker from './pages/DigiLocker/DigiLocker';
 import DigiLockerPin from './pages/DigiLocker/OTPdigiLocker';
 import VentureView from './pages/VentureView/VentureView';
+import Events from './pages/Events/events'
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -75,6 +76,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/otpverify" element={<OtpVerify />} />
+        <Route path="events" element={<Events/>} />
 
 
         {/* Startup routes */}
