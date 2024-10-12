@@ -10,9 +10,6 @@ import { setUser } from '../../redux/authSlice';
 
 const navItems = [
   { name: 'Home', to: '/' },
-  { name: 'Dashboard', to: '/dashboard', protected: true },
-  { name: 'Apply', to: '/application-form', protected: true },
-  { name: 'Notifications', to: '/notifications', protected: true },
   { name: 'FAQ', to: '/faq' },
   { name: 'About AYUSH', to: '/about' },
   { name: 'Resources', to: '/resources' },
@@ -22,12 +19,14 @@ const navItems = [
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false); // For language dropdown
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false); // For user dropdown
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const isAuthenticated = useSelector(state => state.auth.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const dropdownRef = useRef(null);
+  const languageDropdownRef = useRef(null);
+  const userDropdownRef = useRef(null);
   const location = useLocation();
 
   const handleLogout = () => {
@@ -40,14 +39,18 @@ export default function Navbar() {
 
   const changeLanguage = (lang) => {
     setSelectedLanguage(lang);
-    setIsDropdownOpen(false); // Close dropdown after language selection
+    setIsLanguageDropdownOpen(false); // Close language dropdown after selection
     // Add functionality to change the app language here
   };
 
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
+      if (languageDropdownRef.current && !languageDropdownRef.current.contains(event.target)) {
+        setIsLanguageDropdownOpen(false);
+      }
+      if (userDropdownRef.current && !userDropdownRef.current.contains(event.target)) {
+        setIsUserDropdownOpen(false);
       }
     };
 
@@ -64,14 +67,14 @@ export default function Navbar() {
         {/* Language Dropdown */}
         <div className="relative">
           <Button
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
             className="text-sm bg-transparent hover:bg-transparent relative z-20 border-2 "
           >
             {selectedLanguage} ▼
           </Button>
-          {isDropdownOpen && (
+          {isLanguageDropdownOpen && (
             <div
-              ref={dropdownRef}
+              ref={languageDropdownRef}
               className="absolute left-0 mt-1 bg-white text-black rounded shadow-lg py-1 w-32 z-50"
               style={{ top: '100%', zIndex: 100 }}
             >
@@ -160,11 +163,11 @@ export default function Navbar() {
                   {/* Profile Icon with Dropdown */}
                   <div
                     className="relative"
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    ref={dropdownRef}
+                    onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)} // Control user dropdown
+                    ref={userDropdownRef}
                   >
                     <FaUserCircle className="user-icon h-8 w-8 text-gray-700 cursor-pointer" />
-                    {isDropdownOpen && (
+                    {isUserDropdownOpen && (
                       <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md py-2 z-50">
                         <Link to="/profile" className="block px-4 py-2 text-blue-600 hover:bg-gray-100 text-sm">
                           <User className="inline mr-2" />
